@@ -1,0 +1,12 @@
+{application, map_reduce,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { map_reduce_app, []}},
+  {env, []}
+ ]}.
