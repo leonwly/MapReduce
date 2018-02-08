@@ -4,14 +4,12 @@
 %%% @doc
 %%%
 %%% @end
-%%% Created : 31. 一月 2018 18:48
+%%% Created : 06. 二月 2018 17:48
 %%%-------------------------------------------------------------------
--module(seq_test).
+-module(map_reduce).
 -author("leonwly").
 
 -behaviour(gen_server).
-
--include("map_reduce.hrl").
 
 %% API
 -export([start_link/0]).
@@ -24,10 +22,6 @@
     terminate/2,
     code_change/3]).
 
--export([
-    analyze/1
-]).
-
 -define(SERVER, ?MODULE).
 
 -record(state, {}).
@@ -35,11 +29,6 @@
 %%%===================================================================
 %%% API
 %%%===================================================================
-
-%% @doc
-analyze(SymbolList) ->
-    {ok, Terms} = file:consult(?MAP_REDUCE_DATA_FILENAME),
-    map(Terms, SymbolList).
 
 %%--------------------------------------------------------------------
 %% @doc
@@ -71,7 +60,6 @@ start_link() ->
     {ok, State :: #state{}} | {ok, State :: #state{}, timeout() | hibernate} |
     {stop, Reason :: term()} | ignore).
 init([]) ->
-    io:format("~p init ok.~n", [?MODULE]),
     {ok, #state{}}.
 
 %%--------------------------------------------------------------------
@@ -157,17 +145,6 @@ code_change(_OldVsn, State, _Extra) ->
 %%% Internal functions
 %%%===================================================================
 
-%% @doc map function in seq test, to analyze game.config
-map(Terms, SymbolList) ->
-    lists:foldl(fun(Term, Acc) ->
-                    List = str_util:term_to_string(Term),
-                    lists:foldl(fun(Char, Acc1) ->
-                                    case lists:member(Char, SymbolList) of
-                                        false ->
-                                            Acc1;
-                                        true ->
-                                            Count = maps:get(Char, Acc1, 0),
-                                            maps:put(Char, Count+1, Acc1)
-                                    end
-                                end, Acc, List)
-                end, maps:new(), Terms).
+%% @doc
+reduce(MapList) ->
+    todo.

@@ -1,3 +1,5 @@
 
 *.app
 *.beam
+data/game.config
+ml
